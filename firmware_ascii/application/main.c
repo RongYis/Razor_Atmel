@@ -46,7 +46,7 @@ void main(void)
   /* Low level initialization */
   WatchDogSetup(); /* During development, does not reset processor if timeout */
   GpioSetup();
-  GpioConfigue();
+  //GpioConfigue();
   ClockSetup();
   InterruptSetup();
   SysTickSetup();

@@ -1967,9 +1967,6 @@
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\exceptions.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\drivers\GpioConfig.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\interrupts.h</name>
       </file>
       <file>
@@ -1980,6 +1977,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\messaging.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\ModifyVoice.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\sam3u_i2c.h</name>
@@ -2021,9 +2021,6 @@
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\exceptions.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\drivers\GpioConfig.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\interrupts.c</name>
       </file>
       <file>
@@ -2034,6 +2031,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\messaging.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\ModifyVoice.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\sam3u_i2c.c</name>

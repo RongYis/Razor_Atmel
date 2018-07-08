@@ -466,7 +466,7 @@ counter must be set at 1280. */
 0: No effect
 1: Pin is controlled by PIO
 */
-#define PIOA_PER_INIT (u32)0x84030007
+#define PIOA_PER_INIT (u32)0x8403F807
 /* 
     31 [1] PA_31_HEARTBEAT PIO control enabled
     30 [0] PA_30_AN_DEMO PIO control not enabled
@@ -509,7 +509,7 @@ counter must be set at 1280. */
     00 [1] PA_00_TP54 PIO control enabled
 */
 
-#define PIOB_PER_INIT (u32)0x01BFFF57
+#define PIOB_PER_INIT (u32)0x01BFFF5F
 /*
     31 [0] PB_31_ PIO control not enabled
     30 [0] PB_30_ PIO control not enabled
@@ -541,12 +541,12 @@ counter must be set at 1280. */
     09 [1] PB_09_LCD_RST PIO control enabled
     08 [1] PB_08_TP62 PIO control enabled
 
-    07 [1] PB_07_TP60 PIO control enabled
-    06 [0] PB_06_TP58 PIO control not enabled
-    05 [1] PB_05_TP56 PIO control enabled
-    04 [0] PB_04_BLADE_AN1 PIO control not enabled
+    07 [1] PB_07_TP60 PIO control not enabled
+    06 [0] PB_06_TP58 PIO control enabled
+    05 [1] PB_05_TP56 PIO control not enabled
+    04 [0] PB_04_BLADE_AN1 PIO control enabled
 
-    03 [0] PB_03_BLADE_AN0 PIO control not enabled
+    03 [0] PB_03_BLADE_AN0 PIO control enabled
     02 [1] PB_02_BUTTON3 PIO control enabled
     01 [1] PB_01_BUTTON2 PIO control enabled
     00 [1] PB_00_BUTTON1 PIO control enabled
@@ -557,7 +557,7 @@ counter must be set at 1280. */
 0: No effect
 1: Pin is controlled by corresponding peripheral
 */
-#define PIOA_PDR_INIT (u32)0x7BFCFFF8
+#define PIOA_PDR_INIT (u32)0x7BFC07F8
 /* 
     31 [0] PA_31_HEARTBEAT not controlled by peripheral
     30 [1] PA_30_AN_DEMO controlled by peripheral
@@ -600,7 +600,7 @@ counter must be set at 1280. */
     00 [0] PA_00_TP54 not controlled by peripheral
 */
 
-#define PIOB_PDR_INIT (u32)0x00400058
+#define PIOB_PDR_INIT (u32)0x004000A0
 /*
     31 [0] PB_31_ 
     30 [0] PB_30_ 
@@ -648,7 +648,7 @@ Configures the pin as an output or input.
 0: No effect
 1: Enables the output on the I/O line
 */
-#define PIOA_OER_INIT (u32)0xBF55D7F9
+#define PIOA_OER_INIT (u32)0xBF55FFF9
 /* 
     31 [1] PA_31_HEARTBEAT output enabled
     30 [0] PA_30_AN_DEMO input
@@ -691,7 +691,7 @@ Configures the pin as an output or input.
     00 [1] PA_00_TP54 output enabled
 */
 
-#define PIOB_OER_INIT (u32)0x01BFFFE0
+#define PIOB_OER_INIT (u32)0x01BFFFF8
 /*
     31 [0] PB_31_
     30 [0] PB_30_
@@ -738,7 +738,7 @@ Configures the pin as an output or input.
 0: No effect
 1: Disables the output on the I/O line.
 */
-#define PIOA_ODR_INIT (u32)0x40AA2806
+#define PIOA_ODR_INIT (u32)0x40AAD706
 /* 
     31 [0] PA_31_HEARTBEAT output 
     30 [1] PA_30_AN_DEMO input
@@ -781,7 +781,7 @@ Configures the pin as an output or input.
     00 [0] PA_00_TP54 output 
 */
 
-#define PIOB_ODR_INIT (u32)0x0040001F
+#define PIOB_ODR_INIT (u32)0x00400007
 /*
     31 [0] PB_31_
     30 [0] PB_30_
@@ -1009,7 +1009,7 @@ Default start-up IO values are held here.
 0: No effect
 1: Sets the data to be driven on the I/O line.
 */
-#define PIOA_SODR_INIT (u32)0x88010000
+#define PIOA_SODR_INIT (u32)0x88002000
 /* 
     31 [1] PA_31_HEARTBEAT output high 
     30 [0] PA_30_AN_DEMO N/A
@@ -1100,7 +1100,7 @@ Initial output values are stored here.
 0: No effect
 1: Clears the data to be driven on the I/O line.
 */
-#define PIOA_CODR_INIT (u32)0x30000000
+#define PIOA_CODR_INIT (u32)0x3001F800
 /* 
     31 [0] PA_31_HEARTBEAT output high 
     30 [0] PA_30_AN_DEMO N/A
@@ -1143,7 +1143,7 @@ Initial output values are stored here.
     00 [0] PA_00_TP54 N/A
 */
 
-#define PIOB_CODR_INIT (u32)0x00000000
+#define PIOB_CODR_INIT (u32)0x00000018
 /*
     31 [0] PB_31_
     30 [0] PB_30_
