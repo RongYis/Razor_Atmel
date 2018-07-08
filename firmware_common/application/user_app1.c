@@ -136,6 +136,21 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
+  static u8 u8ChooseChannelIndex = 0;
+  
+  /*Press BUTTON3 to choose channel*/
+  if (WasButtonPressed(BUTTON3))
+  {
+    LedOn(RED);
+    
+    u8ChooseChannelIndex++;
+    if (u8ChooseChannelIndex == 2)
+    {
+      u8ChooseChannelIndex = 0;
+    }
+    
+    ChooseChannel(u8ChooseChannelIndex);//choose the current channel
+  }
 
 } /* end UserApp1SM_Idle() */
     

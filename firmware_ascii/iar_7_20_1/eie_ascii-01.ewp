@@ -200,7 +200,7 @@
         </option>
         <option>
           <name>CCListAssFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListAssSource</name>
@@ -309,6 +309,7 @@
           <state>$PROJ_DIR$\..\..\firmware_common\application</state>
           <state>$PROJ_DIR$\..\..\firmware_common\cmsis</state>
           <state>$PROJ_DIR$\..\..\firmware_common\drivers</state>
+          <state>C:\Users\asus\Documents\GitHub\test2\Razor_Atmel\firmware_ascii\drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1960,7 +1961,13 @@
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\buttons.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\drivers\ChooseChannel.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\exceptions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\GpioConfig.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\interrupts.h</name>
@@ -2008,7 +2015,13 @@
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\buttons.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\drivers\ChooseChannel.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\exceptions.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\GpioConfig.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\interrupts.c</name>

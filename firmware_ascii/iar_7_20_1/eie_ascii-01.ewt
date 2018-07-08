@@ -232,7 +232,13 @@
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\buttons.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\drivers\ChooseChannel.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\exceptions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\GpioConfig.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\interrupts.h</name>
@@ -280,7 +286,13 @@
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\buttons.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\drivers\ChooseChannel.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\exceptions.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\GpioConfig.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\interrupts.c</name>
