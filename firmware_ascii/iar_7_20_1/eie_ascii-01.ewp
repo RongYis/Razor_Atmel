@@ -1999,6 +1999,9 @@
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\utilities.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\X9C103_Location.h</name>
+      </file>
     </group>
     <group>
       <name>Source</name>
@@ -2052,6 +2055,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\utilities.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\X9C103_Location.c</name>
       </file>
     </group>
   </group>

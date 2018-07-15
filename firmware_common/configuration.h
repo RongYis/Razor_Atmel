@@ -68,6 +68,7 @@ Includes
 #include "GpioConfig.h"
 #include "ChooseChannel.h"
 #include "ModifyVoice.h"
+#include "X9C103_Location.h"
 
 /* EIEF1-PCB-01 specific header files */
 #ifdef EIE1

@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-1952202749
+Checksum=-119731572
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -24,6 +24,15 @@ CStepIntDis=_ 0
 TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000000
+[array_types]
+Fmt0=u8[3]	3	0
+[watch_formats]
+Fmt0={W}3:s8VoiceIndex	3	0
+Fmt1={W}3:u16ADCIndex	4	0
+Fmt2={W}3:u16count	4	0
+Fmt3={W}3:u8ChooseChannelIndex	3	0
+Fmt4={W}3:u8VoiceIndex	3	0
+Fmt5={W}3:u8count	4	0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""

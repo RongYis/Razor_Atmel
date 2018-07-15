@@ -88,6 +88,10 @@ Promises:
 void UserApp1Initialize(void)
 {
   LedOn(GREEN);
+  LCDCommand(LCD_CLEAR_CMD);
+  
+  LCDMessage(LINE1_START_ADDR, "Voice   : 000 %     ");
+  LCDMessage(LINE2_START_ADDR, "Channel : Mobile    ");
   /* If good initialization, set state to Idle */
   if( 1 )
   {
@@ -136,10 +140,12 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
-  IncreaseVoice();
-  DecreaseVoice();
   ChangeChannel();
   
+  IncreaseVoice();
+  
+  DecreaseVoice();
+ 
 } /* end UserApp1SM_Idle() */
     
 
