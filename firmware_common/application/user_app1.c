@@ -52,6 +52,14 @@ extern volatile u32 G_u32ApplicationFlags;             /* From main.c */
 extern volatile u32 G_u32SystemTime1ms;                /* From board-specific source file */
 extern volatile u32 G_u32SystemTime1s;                 /* From board-specific source file */
 
+extern u8 G_au8DebugScanfBuffer[];  /* From debug.c */
+extern u8 G_u8DebugScanfCharCount;  /* From debug.c */
+
+extern u8 u8WordNumber;
+extern  u8 au8ChineseWord[][LINE_MAX_NUMBER*2];
+extern u8 au8GetDataFromFM24CL16B[50][LINE_MAX_NUMBER*2];
+
+
 
 /***********************************************************************************************************************
 Global variable definitions with scope limited to this local application.
@@ -60,6 +68,8 @@ Variable names shall start with "UserApp1_" and be declared as static.
 static fnCode_type UserApp1_StateMachine;            /* The state machine function pointer */
 //static u32 UserApp1_u32Timeout;                      /* Timeout counter used across states */
 
+static u8 au8ChineseArray[LINE_MAX_NUMBER][100];  /* Save the CHinese Word */
+bool bWriteIsOn = FALSE;
 
 /**********************************************************************************************************************
 Function Definitions
@@ -87,7 +97,9 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
- 
+  read_out_data();    //从存储芯片中读取数据
+  GetChineseData(au8GetDataFromFM24CL16B);
+  
   /* If good initialization, set state to Idle */
   if( 1 )
   {
@@ -136,76 +148,222 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
-  static u32 u32Counter = 0;
-  static u32 u32Status = 0;
-  static u32 u32Index = 0;
-  static u32 u32Time = COUNTER_LIMIT_MS;
-  static bool bLightIson = TRUE;
-  static bool bDarker = TRUE;    //define variables and initialize
+  static u16 u16TimeCounter = 0; 
   
-  u32Counter++; //increase 1 per 1ms
-  
-  /*the solution when u32Time=0*/
-  if(u32Time == 0)
+  if (GetWord_From_Debug())
   {
-    HEARTBEAT_OFF();               //close the heartbeat
+    clear_array(au8ChineseArray);    //清除数组元素
+    bWriteIsOn = TRUE;
+    read_out_data();
+    bWriteIsOn = FALSE;
+    GetChineseData(au8GetDataFromFM24CL16B);
   }
   
-  /*judge the timing of heartbeat*/
-  if(u32Counter == u32Time)      
-  {
-    /*determine on or off*/
-    if(bLightIson)
-    {
-      HEARTBEAT_OFF();              //close the heartbeat
-      bLightIson = FALSE;
-    }
-    
-  }
+  u16TimeCounter++;   //滚动时间计数器
   
-  /*judge per 10ms=100Hz*/
-  if(u32Counter == COUNTER_LIMIT_MS)
+  Screen_Display();
+  
+  if (u16TimeCounter == ROLL_TIME)  //达到滚屏时间
   {
-    u32Counter = 0;
-    
-    if(!bLightIson)
-    {
-      HEARTBEAT_ON();                //open the heartbeat
-      bLightIson = TRUE;
-    }
- 
-    /*judge per 100ms and change its status*/
-    u32Status++;
-    if(u32Status == 10)
-    {
-      u32Status = 0;
-      
-      /*judge the DUTY CIRCLE for increasing or decreasing*/
-      if(bDarker)
-      {
-        u32Time = COUNTER_LIMIT_MS*(100-10*(++u32Index))/100;//increase the DUTY CIRCLE
-        
-        if(u32Index == 10)
-        {
-          bDarker = FALSE; //change the status
-        }
-      }
-      
-      else
-      {
-        u32Time = COUNTER_LIMIT_MS*(100-10*(--u32Index))/100;//decrease the DUTY CIRCLE
-        
-        if(u32Index == 0)
-        {
-          bDarker = TRUE;//change the status
-        }
-      }
-      
-    }
+    u16TimeCounter = 0;
+    Screen_Roll_Left();  //向左滚屏一列
   }
+}
 
-} /* end UserApp1SM_Idle() */
+
+/* 此函数用来清空数组 */
+static void clear_array(u8 u8SelectArray[][100])
+{
+  for (u8 i=0; i<LINE_MAX_NUMBER; i++)
+  {
+    for (u8 j=0; j<100; j++)
+    {
+      u8SelectArray[i][j] = 0;
+    }
+  }
+}
+
+/* 每切换一行显示一行 */
+static void Screen_Display(void)
+{
+  static u8 u8LineNumber = 0;
+  
+  Clear_One_Line();   //清除一行的数据
+  
+  /* 选择 行数 */
+  Line_Choose_Control(u8LineNumber);
+  
+  Display_One_Line(u8LineNumber);  //显示这一行的数据
+  
+  u8LineNumber++;
+  if (u8LineNumber == LINE_MAX_NUMBER)
+  {
+    u8LineNumber = 0;  //返回第一行
+  } 
+   
+}
+
+/* 发送一行的数据 */
+static void Send_One_Line_Data(u8* au8DataArray)
+{
+  static u8 u8Data = 0;
+  
+  AT91C_BASE_PIOA->PIO_SODR  =  PA_12_BLADE_UPOMI;  //M_LE-----1
+  AT91C_BASE_PIOA->PIO_SODR  =  PA_11_BLADE_UPIMO;  //M_OE-----1
+  
+  for (u8 j=0; j<ROW_MAX_NUMBER; j++)  //循环10个字节
+  {
+    u8Data = *(au8DataArray+ROW_MAX_NUMBER-1-j);  // 获取其中一个字节数据
     
+    for (u8 i=0; i<ONE_BYTE_TO_BITS; i++)   //每个字节循环8位
+    {      
+      Row_Choose_Control(u8Data);   //SDI输入数据
+      u8Data = u8Data>>1;    //数据左移一位
+      
+      AT91C_BASE_PIOA->PIO_CODR  =  PA_15_BLADE_SCK;  //M_CLK-----0  
+      AT91C_BASE_PIOA->PIO_SODR  =  PA_15_BLADE_SCK;  //M_CLK-----1  
+    }
+  }
+}
+
+
+/* 显示一行的数据 */
+static void Display_One_Line(u8 u8LineNumber)
+{
+  Send_One_Line_Data(*(au8ChineseArray+u8LineNumber));  //发送汉字数据
+  
+  AT91C_BASE_PIOA->PIO_CODR  =  PA_11_BLADE_UPIMO;  //M_OE-----0 开始输出  
+}
+
+
+/* 清除一行的显示 */
+static void Clear_One_Line(void)
+{
+  static u8 au8ClearArray[ROW_MAX_NUMBER];
+  
+  /* 初始化一行清除数据 */
+  for (u8 i=0; i<ROW_MAX_NUMBER; i++)
+  {
+     *(au8ClearArray+i) = 0x00;
+  }
+  
+  Send_One_Line_Data(au8ClearArray);   //发送清除数据
+}
+
+
+/* 获取中文字模数据放进 au8ChineseArray 数组中 */
+static void GetChineseData(u8 au8GetChinese[][LINE_MAX_NUMBER*2])
+{
+  static u8 u8ChineseLineIndex = 0;
+  
+  /* 将中文数据 au8ChineseWord 的每一行的两列 放到
+  au8ChineseArray 的两列中*/
+  for (u8 j=0; j<(u8WordNumber/2); j++)
+  {
+    for (u8 i=0; i<LINE_MAX_NUMBER; i++)
+    {   
+      au8ChineseArray[i][2*j-2*u8ChineseLineIndex] = au8GetChinese[j][2*i];
+      au8ChineseArray[i][2*j+1-2*u8ChineseLineIndex] = au8GetChinese[j][2*i+1];
+    }
+  }  
+  
+}
+
+
+/* 屏幕开始向左滚动一列 */
+static void Screen_Roll_Left(void)
+{
+  static u8 u8FirstRowData = 0;
+  
+  for (u8 i=0; i<LINE_MAX_NUMBER; i++)
+  {
+    /* 获取每一列第一个数据 */
+    u8FirstRowData = au8ChineseArray[i][0] & BYTE_MAX_BIT;
+    for (u8 j=0; j<(u8WordNumber/2+5)*2; j++)
+    {
+      /* 处理前 Word_NUMBER-1 个数据 */
+      if (j < (u8WordNumber/2+5)*2-1)
+      {
+        au8ChineseArray[i][j] = au8ChineseArray[i][j]<<1;   //数据左移
+        
+        /* 将下一个字节的第一位放在当前字节的最后一位 */
+        if ((au8ChineseArray[i][j+1] &BYTE_MAX_BIT) == BYTE_MAX_BIT)
+        {
+          au8ChineseArray[i][j] = (au8ChineseArray[i][j]&0xFE)|BYTE_MIN_BIT;
+        }
+      }
+      else  /*处理第 Word_NUMBER 个数据 */
+      {
+        au8ChineseArray[i][j] = au8ChineseArray[i][j]<<1;  //数据左移
+        
+        /* 将每一列获得的第一位放到最后一列，即放到最后一个字节的最后一位 */
+        if ((u8FirstRowData &BYTE_MAX_BIT) == BYTE_MAX_BIT)
+        {
+          au8ChineseArray[i][j] = (au8ChineseArray[i][j]&0xFE)|BYTE_MIN_BIT;
+        }
+      }
+    }
+  }
+}
+
+
+/* 检查每个字节的最高位来控制SDI的高低电平 */
+static void Row_Choose_Control(u8 u8Data)
+{
+  if ((u8Data & BYTE_MIN_BIT) == BYTE_MIN_BIT)
+  {
+    AT91C_BASE_PIOA->PIO_SODR  =  PA_14_BLADE_MOSI; //M_SDI-----1
+  }
+  else
+  {
+    AT91C_BASE_PIOA->PIO_CODR  =  PA_14_BLADE_MOSI; //M_SDI-----0
+  }
+}
+
+
+/* 利用行号来控制 A B C D的高低电平 */
+static void Line_Choose_Control(u8 u8LineNumber)
+{
+  AT91C_BASE_PIOA->PIO_SODR  =  PA_03_HSMCI_MCCK;   //STB---1
+  AT91C_BASE_PIOA->PIO_CODR  =  PA_04_HSMCI_MCCDA;  //INH---0
+  
+  if ((u8LineNumber & FIRST_BIT) == FIRST_BIT)
+  {
+    AT91C_BASE_PIOA->PIO_SODR  =  PA_05_HSMCI_MCDA0;  //A-----1
+  }
+  else
+  {
+    AT91C_BASE_PIOA->PIO_CODR  =  PA_05_HSMCI_MCDA0;  //A-----0
+  }
+  
+  if ((u8LineNumber & SECOND_BIT) == SECOND_BIT)
+  {
+    AT91C_BASE_PIOA->PIO_SODR  =  PA_06_HSMCI_MCDA1;  //B-----1
+  }
+  else
+  {
+    AT91C_BASE_PIOA->PIO_CODR  =  PA_06_HSMCI_MCDA1;  //B-----0
+  }
+  
+  if ((u8LineNumber & THIRD_BIT) == THIRD_BIT)
+  {
+    AT91C_BASE_PIOA->PIO_SODR  =  PA_07_HSMCI_MCDA2;  //C-----1
+  }
+  else
+  {
+    AT91C_BASE_PIOA->PIO_CODR  =  PA_07_HSMCI_MCDA2;  //C-----0
+  }
+  
+  if ((u8LineNumber & FORTH_BIT) == FORTH_BIT)
+  {
+    AT91C_BASE_PIOA->PIO_SODR  =  PA_08_SD_CS_MCDA3;  //D-----1
+  }
+  else
+  {
+    AT91C_BASE_PIOA->PIO_CODR  =  PA_08_SD_CS_MCDA3;  //D-----0
+  }
+}
+
 
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* Handle an error */

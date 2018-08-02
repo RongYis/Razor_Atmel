@@ -38,7 +38,6 @@ contraints but must complete execution regardless of success or failure of start
 1ms of execution time counting all application execution.  SystemSleep() will execute to complete the remaining time in
 the 1ms period.
 ***********************************************************************************************************************/
-
 void main(void)
 {
   G_u32SystemFlags |= _SYSTEM_INITIALIZING;

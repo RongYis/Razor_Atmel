@@ -28,7 +28,17 @@ Type Definitions
 /**********************************************************************************************************************
 Constants / Definitions
 **********************************************************************************************************************/
-#define COUNTER_LIMIT_MS (u32)10
+#define COUNTER_LIMIT_MS   (u32)10
+#define LINE_MAX_NUMBER    (u8)16
+#define ROW_MAX_NUMBER     (u8)10
+#define ONE_BYTE_TO_BITS   (u8)8
+#define BYTE_MAX_BIT       (u8)0x80
+#define BYTE_MIN_BIT       (u8)0x01
+#define FIRST_BIT          (u8)0x1
+#define SECOND_BIT         (u8)0x2
+#define THIRD_BIT          (u8)0x4
+#define FORTH_BIT          (u8)0x8
+#define ROLL_TIME          (u8)150
 
 /**********************************************************************************************************************
 Function Declarations
@@ -45,7 +55,6 @@ Function Declarations
 void UserApp1Initialize(void);
 void UserApp1RunActiveState(void);
 
-
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Private functions                                                                                                  */
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -58,7 +67,25 @@ static void UserApp1SM_Idle(void);
 
 static void UserApp1SM_Error(void);         
 
+static void Delay_1s(void);
 
+static void clear_array(u8 u8SelectArray[][100]);
+
+static void Screen_Display(void);
+
+static void Display_One_Line(u8 u8LineNumber);
+
+static void Clear_One_Line(void);
+
+static void Screen_Roll_Left(void);
+
+static void Row_Choose_Control(u8 u8Data);
+
+static void Line_Choose_Control(u8 u8LineNumber);
+
+static void GetChineseData(u8 au8GetChinese[][LINE_MAX_NUMBER*2]);
+
+static void Send_One_Line_Data(u8* au8DataArray);
 #endif /* __USER_APP1_H */
 
 

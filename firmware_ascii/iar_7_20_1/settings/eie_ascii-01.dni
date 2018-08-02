@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-233304312
+Checksum=-1786480241
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -24,6 +24,42 @@ CStepIntDis=_ 0
 TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000000
+[struct_types]
+Fmt0=TWIMessageQueueType-u8Address	4	0
+[array_types]
+Fmt0=u16[10]	4	0
+Fmt1=u8[100]	4	0
+Fmt2=u8[10]	4	0
+Fmt3=u8[128]	4	0
+Fmt4=u8[20]	4	0
+Fmt5=u8[2]	4	0
+Fmt6=u8[30]	4	0
+Fmt7=u8[32]	4	0
+Fmt8=u8[3]	4	0
+Fmt9=u8[4]	4	0
+Fmt10=u8[6]	4	0
+Fmt11=u8[8]	4	0
+[watch_formats]
+Fmt0={W}3:G_u8DebugScanfCharCount	3	0
+Fmt1={W}3:TWI0->pBaseAddress->TWI_MMR	4	0
+Fmt2={W}3:TWI_MessageBufferCurIndex	3	0
+Fmt3={W}3:TWI_MessageBufferNextIndex	3	0
+Fmt4={W}3:TWI_MessageQueueLength	3	0
+Fmt5={W}3:TWI_u32Flags	4	0
+Fmt6={W}3:k	4	0
+Fmt7={W}3:pu8Data	4	0
+Fmt8={W}3:u16Ch	4	0
+Fmt9={W}3:u16OneWord	4	0
+Fmt10={W}3:u32Ch	4	0
+Fmt11={W}3:u32Token	3	0
+Fmt12={W}3:u8CharCount	3	0
+Fmt13={W}3:u8ChineseLineIndex	4	0
+Fmt14={W}3:u8Data	4	0
+Fmt15={W}3:u8GetChineseData	4	0
+Fmt16={W}3:u8LineNumber	3	0
+Fmt17={W}3:u8Temp	4	0
+Fmt18={W}3:u8WordNumber	3	0
+Fmt19={W}3:u8s	4	0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""

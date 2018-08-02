@@ -280,7 +280,16 @@
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\buttons.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\drivers\ChineseWord.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\exceptions.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\FM24CL16B.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\GT21L16S2W.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\interrupts.c</name>
@@ -293,6 +302,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\messaging.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\drivers\myi2c.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\..\firmware_common\drivers\sam3u_i2c.c</name>

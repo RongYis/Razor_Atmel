@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<userOverrides>
+  <override>
+    <path>C:\Users\asus\Documents\GitHub\test2\Razor_Atmel\firmware_ascii\drivers\FM24CL16B.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>C:\Users\asus\Documents\GitHub\test2\Razor_Atmel\firmware_ascii\drivers\GT21L16S2W.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>C:\Users\asus\Documents\GitHub\test2\Razor_Atmel\firmware_common\application\user_app1.c</path>
+    <encoding>System</encoding>
+  </override>
+</userOverrides>
+
+
